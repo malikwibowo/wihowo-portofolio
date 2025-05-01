@@ -24,7 +24,7 @@ import { Footer } from "./footer";
 export const Navbar = () => {
   return (
     <nav className="fixed bg-white top-0 w-full h-[4.5rem] z-99">
-      <div className="max-w-md mx-auto h-full">
+      <div className="max-w-md mx-auto px-4 md:px-0 h-full">
         <div className="flex items-center justify-between gap-4 h-full">
           <Breadcrumb>
             <BreadcrumbList>

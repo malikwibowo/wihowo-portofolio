@@ -3,16 +3,14 @@ import React from "react";
 import { Minus } from "lucide-react";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 
-// Define the type for the project data
 export interface ProjectData {
-  ImgSrc: string; // Path to the image
-  Year: string; // Year of the project
-  Name: string; // Project name
-  Desc: string; // Project description
-  Categories: string[]; // List of categories
+  ImgSrc: string;
+  Year: string;
+  Name: string;
+  Desc: string;
+  Categories: string[];
 }
 
-// Accept props in the component
 interface WorkCardProps {
   project: ProjectData;
 }

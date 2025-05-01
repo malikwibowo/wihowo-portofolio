@@ -6,8 +6,8 @@ import Image from "next/image";
 export const ListWorks = () => {
   return (
     <section className="w-full pt-8 pb-[7.25rem]">
-      <div className="max-w-lg mx-auto">
-        <div className="grid grid-cols-3 gap-6">
+      <div className="max-w-lg mx-auto px-4 md:px-0">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {project.map((proj, index) => (
             <AspectRatio
               ratio={38 / 28}

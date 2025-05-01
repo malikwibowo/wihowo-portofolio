@@ -3,6 +3,7 @@ import { Inter_Tight } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { SectionDivider } from "@/components/global/sectionDivider";
 
 const interTight = Inter_Tight({
   variable: "--font-inter-tight",
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className={`${interTight.variable} antialiased`}>
         <Navbar />
         {children}
+        <SectionDivider />
         <Footer />
       </body>
     </html>

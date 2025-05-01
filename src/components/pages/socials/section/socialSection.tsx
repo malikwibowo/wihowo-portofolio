@@ -1,0 +1,23 @@
+import React from "react";
+import { SocialWrapper } from "@/components/pages/socials/components/socialWrapper";
+import { socials } from "@/data/socials";
+import { ContactForm } from "@/components/pages/socials/components/contactForm";
+
+export const SocialSection = () => {
+  return (
+    <section className="w-full pt-8 pb-[7.25rem]">
+      <div className="max-w-md mx-auto px-4 md:px-0">
+        <div className="flex flex-col gap-[5.5rem]">
+          {socials.map((social, index) => (
+            <SocialWrapper
+              key={index}
+              title={social.title}
+              socials={social.socials}
+            />
+          ))}
+          <ContactForm />
+        </div>
+      </div>
+    </section>
+  );
+};

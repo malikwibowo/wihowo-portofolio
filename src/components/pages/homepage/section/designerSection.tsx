@@ -6,8 +6,8 @@ import { project } from "@/data/works";
 
 export const DesignerSection = () => {
   return (
-    <section className="w-full pt-4">
-      <div className="max-w-md mx-auto h-full">
+    <section className="w-full pt-4 pb-[7.25rem]">
+      <div className="max-w-md mx-auto px-4 md:px-0 h-full">
         <div className="w-full h-[0.0625rem] bg-gray-200 mb-4"></div>
         <div className="flex flex-col gap-6">
           <h2 className="text-bodyMedium font-medium">Designer</h2>
@@ -22,11 +22,10 @@ export const DesignerSection = () => {
           </p>
         </div>
         <div className="flex flex-col gap-16 mt-14">
-          {project.map((proj, index) => (
+          {project.slice(0, 2).map((proj, index) => (
             <WorkCard key={index} project={proj} />
           ))}
         </div>
-        <div className="w-full h-[0.0625rem] bg-gray-200 mt-[7.25rem]"></div>
       </div>
     </section>
   );
