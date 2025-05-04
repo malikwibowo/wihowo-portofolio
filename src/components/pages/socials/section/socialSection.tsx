@@ -15,7 +15,12 @@ export const SocialSection = () => {
               socials={social.socials}
             />
           ))}
-          <ContactForm />
+          <div className="flex flex-col gap-4">
+            <span className="text-bodyMedium font-medium">
+              /Or start with typing
+            </span>
+            <ContactForm />
+          </div>
         </div>
       </div>
     </section>

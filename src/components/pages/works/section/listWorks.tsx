@@ -15,8 +15,8 @@ export const ListWorks = () => {
               className="rounded-[0.625rem] overflow-hidden"
             >
               <Image
-                src={proj.ImgSrc}
-                alt={proj.Name}
+                src={proj.imgSrc}
+                alt={proj.name}
                 className="object-cover"
                 fill
               />

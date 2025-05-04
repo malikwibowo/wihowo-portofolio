@@ -20,7 +20,7 @@ export const Footer = () => {
             <Link href="/moments">Moments</Link>
           </Button>
           <Button variant="link" className="justify-start" asChild>
-            <Link href="/writing">Writing</Link>
+            <Link href="/writings">Writing</Link>
           </Button>
           <Button variant="link" className="justify-start" asChild>
             <Link href="/archive">Archive</Link>

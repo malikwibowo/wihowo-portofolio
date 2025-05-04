@@ -1,5 +1,7 @@
-import React from "react";
-import { Equal, Slash } from "lucide-react";
+"use client";
+
+import React, { useState } from "react";
+import { Equal, Slash, X } from "lucide-react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,7 +14,6 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/components/ui/drawer";
 
 import { Button } from "../ui/button";
@@ -20,13 +21,21 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import MalikAva from "@/assets/images/malikava.png";
 import { Footer } from "./footer";
+import Link from "next/link";
 
 export const Navbar = () => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const handleDrawerToggle = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    setIsDrawerOpen((prev) => !prev);
+  };
+
   return (
-    <nav className="fixed bg-white top-0 w-full h-[4.5rem] z-99">
+    <nav className="fixed bg-white top-0 w-full h-[4.5rem] z-99 pointer-events-auto">
       <div className="max-w-md mx-auto px-4 md:px-0 h-full">
         <div className="flex items-center justify-between gap-4 h-full">
-          <Breadcrumb>
+          <Breadcrumb className="z-100">
             <BreadcrumbList>
               <BreadcrumbItem className="flex items-center gap-2">
                 <Image className="w-8 h-8" src={MalikAva} alt="Malik Avatar" />
@@ -41,13 +50,24 @@ export const Navbar = () => {
             </BreadcrumbList>
           </Breadcrumb>
           <div className="flex gap-2 items-center">
-            <Drawer direction="top">
-              <DrawerTrigger>
-                <Button variant="outline" size="sm">
-                  <Equal className="w-4 h-4" />
-                  <span>Menu</span>
-                </Button>
-              </DrawerTrigger>
+            <Drawer
+              open={isDrawerOpen}
+              onOpenChange={(open) => setIsDrawerOpen(open)}
+              direction="top"
+            >
+              <Button variant="outline" size="sm" onClick={handleDrawerToggle}>
+                {isDrawerOpen ? (
+                  <>
+                    <X className="w-4 h-4" />
+                    <span>Close</span>
+                  </>
+                ) : (
+                  <>
+                    <Equal className="w-4 h-4" />
+                    <span>Menu</span>
+                  </>
+                )}
+              </Button>
               <DrawerContent className="top-[4.5rem] border-t border-t-gray-200">
                 <DrawerHeader className="sr-only">
                   <DrawerTitle>Are you absolutely sure?</DrawerTitle>
@@ -55,8 +75,10 @@ export const Navbar = () => {
                 <Footer />
               </DrawerContent>
             </Drawer>
-            <Button variant="default" size="sm">
-              <span>Contact</span>
+            <Button variant="default" size="sm" asChild>
+              <Link href="/contact">
+                <span>Contact</span>
+              </Link>
             </Button>
           </div>
         </div>

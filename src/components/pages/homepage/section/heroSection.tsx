@@ -2,7 +2,7 @@ import React from "react";
 
 export const HeroSection = () => {
   return (
-    <section className="w-full h-screen">
+    <section className="w-full pt-[17.25rem] pb-[13.5rem]">
       <div className="max-w-md mx-auto px-4 md:px-0 h-full">
         <div className="flex justify-center h-full flex-col gap-1">
           <p>Hi, salam kenal!</p>

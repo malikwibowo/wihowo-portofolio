@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { SectionDivider } from "@/components/global/sectionDivider";
+import SmoothScroller from "@/providers/lenisProviders";
 
 const interTight = Inter_Tight({
   variable: "--font-inter-tight",
@@ -22,7 +23,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${interTight.variable} antialiased`}>
+      <body
+        suppressHydrationWarning
+        className={`${interTight.variable} antialiased`}
+      >
+        <SmoothScroller />
         <Navbar />
         {children}
         <SectionDivider />

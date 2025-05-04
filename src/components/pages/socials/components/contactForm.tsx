@@ -43,57 +43,54 @@ export const ContactForm = () => {
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <span className="text-bodyMedium font-medium">/Or start with typing</span>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input placeholder="Name" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input placeholder="Email" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormField
             control={form.control}
-            name="message"
+            name="name"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Textarea
-                    placeholder="Message"
-                    className="min-h-[10.75rem]"
-                    {...field}
-                  />
+                  <Input placeholder="Name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button className="w-full mt-2" type="submit">
-            Send
-          </Button>
-        </form>
-      </Form>
-    </div>
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input placeholder="Email" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <FormField
+          control={form.control}
+          name="message"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Textarea
+                  placeholder="Message"
+                  className="min-h-[10.75rem]"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button className="w-full mt-2" type="submit">
+          Send
+        </Button>
+      </form>
+    </Form>
   );
 };

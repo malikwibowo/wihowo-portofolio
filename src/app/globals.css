@@ -149,3 +149,7 @@
     font-family: var(--font-inter-tight);
   }
 }
+
+[data-vaul-drawer]:not([data-vaul-custom-container="true"])::after {
+  content: unset !important;
+}
