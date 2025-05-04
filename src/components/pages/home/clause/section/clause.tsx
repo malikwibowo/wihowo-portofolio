@@ -4,7 +4,7 @@ import React from "react";
 export const ClauseContent = () => {
   return (
     <div className="pt-8 pb-[7.25rem]">
-      <div className="max-w-lg mx-auto">
+      <div className="max-w-lg mx-auto px-4 md:px-0">
         <div className="w-full flex flex-col gap-6">
           <ImageWrapper src="/assets/images/works/clause/clause1.webp" />
           <ImageWrapper src="/assets/images/works/clause/clause2.webp" />
