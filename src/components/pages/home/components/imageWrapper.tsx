@@ -23,7 +23,10 @@ const ImageWrapper = ({ src }: { src: string }) => {
         alt=""
         fill
         className="object-cover"
-        onLoadingComplete={handleImageLoad}
+        onLoad={(e) => {
+          const img = e.currentTarget as HTMLImageElement;
+          handleImageLoad(img);
+        }}
         quality={100}
       />
     </div>

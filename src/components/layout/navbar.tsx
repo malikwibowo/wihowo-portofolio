@@ -22,6 +22,15 @@ import Image from "next/image";
 import MalikAva from "@/assets/images/malikava.png";
 import { Footer } from "./footer";
 import Link from "next/link";
+import HoverImageBurst from "../global/hoverImageBurst";
+
+const imagesBurst = [
+  "/assets/images/moments/malik/1.webp",
+  "/assets/images/moments/malik/2.webp",
+  "/assets/images/moments/malik/3.webp",
+  "/assets/images/moments/malik/4.webp",
+  "/assets/images/moments/malik/5.webp",
+];
 
 export const Navbar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -37,10 +46,16 @@ export const Navbar = () => {
         <div className="flex items-center justify-between gap-4 h-full">
           <Breadcrumb className="z-100">
             <BreadcrumbList>
-              <BreadcrumbItem className="flex items-center gap-2">
-                <Image className="w-8 h-8" src={MalikAva} alt="Malik Avatar" />
-                malikwibowo
-              </BreadcrumbItem>
+              <HoverImageBurst images={imagesBurst}>
+                <BreadcrumbItem className="flex items-center gap-2">
+                  <Image
+                    className="w-8 h-8"
+                    src={MalikAva}
+                    alt="Malik Avatar"
+                  />
+                  malikwibowo
+                </BreadcrumbItem>
+              </HoverImageBurst>
               <BreadcrumbSeparator>
                 <Slash />
               </BreadcrumbSeparator>
