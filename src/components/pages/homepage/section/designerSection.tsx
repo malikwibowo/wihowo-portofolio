@@ -2,7 +2,7 @@ import { WorkCard } from "@/components/global/workCard";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";
-import { project } from "@/data/works";
+import { staticProject } from "@/data/staticProject";
 
 export const DesignerSection = () => {
   return (
@@ -21,8 +21,8 @@ export const DesignerSection = () => {
             — with specializes in User Interface Design.
           </p>
         </div>
-        <div className="flex flex-col gap-16 mt-14">
-          {project.slice(0, 2).map((proj, index) => (
+        <div className="flex flex-col gap-16 lg:gap-60 mt-14 relative">
+          {staticProject.slice(0, 2).map((proj, index) => (
             <WorkCard key={index} project={proj} />
           ))}
         </div>

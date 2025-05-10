@@ -3,6 +3,15 @@ import { project } from "@/data/works";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Image from "next/image";
 
+export interface ProjectData {
+  imgSrc: string;
+  year: string;
+  name: string;
+  desc: string;
+  categories: string[];
+  url?: string;
+}
+
 export const ListWorks = () => {
   return (
     <section className="w-full pt-8 pb-[7.25rem]">

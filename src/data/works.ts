@@ -1,4 +1,4 @@
-import { ProjectData } from "@/components/global/workCard";
+import { ProjectData } from "@/components/pages/works/section/listWorks";
 
 export const project: ProjectData[] = [
   {
