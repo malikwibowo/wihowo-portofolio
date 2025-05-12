@@ -2,6 +2,7 @@ import React from "react";
 import { project } from "@/data/works";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Image from "next/image";
+import FadeInSection from "@/components/animations/fadeInSection";
 
 export interface ProjectData {
   imgSrc: string;
@@ -16,7 +17,10 @@ export const ListWorks = () => {
   return (
     <section className="w-full pt-8 pb-[7.25rem]">
       <div className="max-w-lg mx-auto px-4 md:px-0">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <FadeInSection
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+          delay={1}
+        >
           {project.map((proj, index) => (
             <AspectRatio
               ratio={38 / 28}
@@ -31,7 +35,7 @@ export const ListWorks = () => {
               />
             </AspectRatio>
           ))}
-        </div>
+        </FadeInSection>
       </div>
     </section>
   );

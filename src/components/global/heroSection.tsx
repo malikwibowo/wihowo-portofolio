@@ -1,4 +1,5 @@
 import React from "react";
+import FadeInSection from "../animations/fadeInSection";
 
 export interface HeroData {
   title: string;
@@ -12,8 +13,12 @@ export const HeroSection = (props: HeroData) => {
     <section className="w-full pt-[11.75rem] pb-[7.25rem]">
       <div className="max-w-md mx-auto px-4 md:px-0">
         <div className="flex flex-col gap-1">
-          <span className="text-bodyMedium text-gray-600">{subtitle}</span>
-          <h1 className="text-h1 font-medium">{title}</h1>
+          <FadeInSection delay={0.4}>
+            <span className="text-bodyMedium text-gray-600">{subtitle}</span>
+          </FadeInSection>
+          <FadeInSection delay={0.6}>
+            <h1 className="text-h1 font-medium">{title}</h1>
+          </FadeInSection>
         </div>
       </div>
     </section>

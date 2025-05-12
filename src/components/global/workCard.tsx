@@ -79,7 +79,7 @@ export const WorkCard: React.FC<WorkCardProps> = ({ project }) => {
     <Link href={url ? url : "#"}>
       <div
         ref={sectionRef}
-        className="flex flex-col justify-between gap-8 w-full lg:h-[1000vh]"
+        className="flex flex-col justify-between gap-8 w-full lg:h-[700vh]"
       >
         <div ref={stickyRef} className="lg:sticky lg:top-1/2 lg:mt-60">
           <div

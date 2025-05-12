@@ -4,14 +4,12 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog";
 import { momentsData } from "@/data/moments";
+import FadeInSection from "@/components/animations/fadeInSection";
 
 export const MomentSection = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [imageDimensions, setImageDimensions] = useState({
-    width: 0,
-    height: 0,
-  });
+  const [aspectRatio, setAspectRatio] = useState(1); // Store the aspect ratio
   const [scale, setScale] = useState(1);
 
   const handleOpen = (imgSrc: string) => {
@@ -22,25 +20,26 @@ export const MomentSection = () => {
   const handleClose = () => {
     setIsOpen(false);
     setSelectedImage(null);
-    setImageDimensions({ width: 0, height: 0 });
+    setAspectRatio(1);
     setScale(1);
   };
 
   const handleImageLoad = (img: HTMLImageElement) => {
-    setImageDimensions({
-      width: img.naturalWidth,
-      height: img.naturalHeight,
-    });
+    const ratio = img.naturalWidth / img.naturalHeight;
+    setAspectRatio(ratio); // Calculate and store the aspect ratio
   };
 
   const toggleZoom = () => {
-    setScale((prevScale) => (prevScale === 1 ? 1.5 : 1));
+    setScale((prevScale) => (prevScale === 1 ? 1.3 : 1));
   };
 
   return (
     <section className="w-full pt-8 pb-[7.25rem]">
       <div className="max-w-lg mx-auto px-4 md:px-0">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
+        <FadeInSection
+          delay={1}
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6"
+        >
           {momentsData.map((data, index) => (
             <div
               key={index}
@@ -57,7 +56,7 @@ export const MomentSection = () => {
               </div>
             </div>
           ))}
-        </div>
+        </FadeInSection>
       </div>
 
       <Dialog
@@ -86,12 +85,13 @@ export const MomentSection = () => {
         >
           {selectedImage && (
             <div
-              className="relative transition-transform duration-300 overflow-hidden"
+              className="relative transition-transform duration-300 overflow-hidden w-full h-full"
               style={{
-                width: `${imageDimensions.width}px`,
-                height: `${imageDimensions.height}px`,
+                aspectRatio: `${aspectRatio}`, // Maintain the aspect ratio
                 transform: `scale(${scale})`,
                 cursor: scale === 1 ? "zoom-in" : "zoom-out",
+                maxWidth: "60vw", // Limit the width to the container
+                maxHeight: "60vh", // Limit the height to the container
               }}
               onClick={toggleZoom}
             >
@@ -99,7 +99,7 @@ export const MomentSection = () => {
                 src={selectedImage}
                 alt="Zoomed"
                 fill
-                className="object-contain w-full h-full"
+                className="object-contain"
                 onLoadingComplete={handleImageLoad}
               />
             </div>

@@ -1,3 +1,4 @@
+import FadeInSection from "@/components/animations/fadeInSection";
 import ImageWrapper from "@/components/pages/home/components/imageWrapper";
 import React from "react";
 
@@ -5,7 +6,7 @@ export const PayzenContent = () => {
   return (
     <div className="pt-8 pb-[7.25rem]">
       <div className="max-w-lg mx-auto px-4 md:px-0">
-        <div className="w-full flex flex-col gap-6">
+        <FadeInSection delay={1.2} className="w-full flex flex-col gap-6">
           <video
             className="w-full h-auto"
             autoPlay
@@ -33,7 +34,7 @@ export const PayzenContent = () => {
           </div>
           <ImageWrapper src="/assets/images/works/payzen/payzen9.webp" />
           <ImageWrapper src="/assets/images/works/payzen/payzen10.webp" />
-        </div>
+        </FadeInSection>
       </div>
     </div>
   );
