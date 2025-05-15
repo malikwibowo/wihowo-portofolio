@@ -15,6 +15,15 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 
+export interface ProjectData {
+  imgSrc: string;
+  year: string;
+  name: string;
+  desc: string;
+  categories: string[];
+  url?: string;
+}
+
 export const ListWorks = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
   const [isOpen, setIsOpen] = useState(false);
