@@ -13,7 +13,9 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
+  DrawerTrigger,
 } from "@/components/ui/drawer";
+import { usePathname } from "next/navigation";
 
 import { Button } from "../ui/button";
 
@@ -34,15 +36,10 @@ const imagesBurst = [
 
 export const Navbar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const pathname = usePathname();
 
-  const handleDrawerToggle = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    setIsDrawerOpen((prev) => !prev);
-  };
-
-  const handleCloseDrawer = () => {
-    setIsDrawerOpen(false); // Close the drawer
-  };
+  // Split the pathname into segments and filter out empty strings
+  const pathSegments = pathname.split("/").filter((segment) => segment);
 
   return (
     <FadeInSection delay={0.2} variant="top-to-bottom">
@@ -51,53 +48,93 @@ export const Navbar = () => {
           <div className="flex items-center justify-between gap-4 h-full">
             <Breadcrumb className="z-100">
               <BreadcrumbList>
-                <HoverImageBurst images={imagesBurst}>
-                  <BreadcrumbItem className="flex items-center gap-2">
-                    <Image
-                      className="w-8 h-8"
-                      src={MalikAva}
-                      alt="Malik Avatar"
-                    />
-                    malikwibowo
-                  </BreadcrumbItem>
-                </HoverImageBurst>
-                <BreadcrumbSeparator>
-                  <Slash />
-                </BreadcrumbSeparator>
                 <BreadcrumbItem>
-                  <Link href="/">home</Link>
+                  <HoverImageBurst images={imagesBurst}>
+                    <Link className="flex items-center gap-2" href="/">
+                      <Image
+                        className="w-8 h-8"
+                        src={MalikAva}
+                        alt="Malik Avatar"
+                      />
+                      <p
+                        className={`${
+                          pathname === "/" ? "inline" : "hidden"
+                        } md:inline`}
+                      >
+                        malikwibowo
+                      </p>
+                    </Link>
+                  </HoverImageBurst>
                 </BreadcrumbItem>
+
+                {pathSegments.length > 0 && (
+                  <React.Fragment>
+                    <BreadcrumbSeparator>
+                      <Slash />
+                    </BreadcrumbSeparator>
+                    <BreadcrumbItem>
+                      <Link href={`/${pathSegments[0]}`}>
+                        {pathSegments.length === 1 ? (
+                          <span>{pathSegments[0]}</span>
+                        ) : (
+                          <>
+                            <span className="md:hidden">...</span>
+                            <span className="hidden md:inline">
+                              {pathSegments[0]}
+                            </span>
+                          </>
+                        )}
+                      </Link>
+                    </BreadcrumbItem>
+                  </React.Fragment>
+                )}
+
+                {pathSegments.slice(1).map((segment, index) => (
+                  <React.Fragment key={index}>
+                    <BreadcrumbSeparator>
+                      <Slash />
+                    </BreadcrumbSeparator>
+                    <BreadcrumbItem>
+                      <Link
+                        href={`/${pathSegments.slice(0, index + 2).join("/")}`}
+                      >
+                        {segment}
+                      </Link>
+                    </BreadcrumbItem>
+                  </React.Fragment>
+                ))}
               </BreadcrumbList>
             </Breadcrumb>
             <div className="flex gap-2 items-center">
               <Drawer
                 open={isDrawerOpen}
-                onOpenChange={(open) => setIsDrawerOpen(open)}
+                onOpenChange={(open) => setIsDrawerOpen(open)} // Sync state with Drawer
                 direction="top"
               >
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleDrawerToggle}
-                >
-                  {isDrawerOpen ? (
-                    <>
-                      <X className="w-4 h-4" />
-                      <span>Close</span>
-                    </>
-                  ) : (
-                    <>
-                      <Equal className="w-4 h-4" />
-                      <span>Menu</span>
-                    </>
-                  )}
-                </Button>
+                <DrawerTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className={`${isDrawerOpen ? "pointer-events-none" : ""}`}
+                  >
+                    {isDrawerOpen ? (
+                      <>
+                        <X className="w-4 h-4" />
+                        <span>Close</span>
+                      </>
+                    ) : (
+                      <>
+                        <Equal className="w-4 h-4" />
+                        <span>Menu</span>
+                      </>
+                    )}
+                  </Button>
+                </DrawerTrigger>
                 <DrawerContent className="top-[4.5rem] border-t border-t-gray-200">
                   <DrawerHeader className="sr-only">
                     <DrawerTitle>Are you absolutely sure?</DrawerTitle>
                   </DrawerHeader>
-                  {/* Pass the handleCloseDrawer function to the Footer */}
-                  <Footer onLinkClick={handleCloseDrawer} />
+                  <Footer onLinkClick={() => setIsDrawerOpen(false)} />
                 </DrawerContent>
               </Drawer>
               <Button variant="default" size="sm" asChild>

@@ -9,7 +9,7 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onLinkClick }) => {
   return (
-    <footer className="w-full py-20">
+    <footer className="w-full py-12 md:py-20">
       <div className="max-w-md mx-auto px-4 md:px-0 h-full">
         <FadeInSection delay={1}>
           <div className="w-full grid grid-cols-2">

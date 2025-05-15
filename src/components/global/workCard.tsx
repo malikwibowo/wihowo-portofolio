@@ -79,7 +79,7 @@ export const WorkCard: React.FC<WorkCardProps> = ({ project }) => {
     <Link href={url ? url : "#"}>
       <div
         ref={sectionRef}
-        className="flex flex-col justify-between gap-8 w-full lg:h-[700vh]"
+        className="flex flex-col justify-between gap-6 md:gap-8 w-full lg:h-[700vh]"
       >
         <div ref={stickyRef} className="lg:sticky lg:top-1/2 lg:mt-60">
           <div
@@ -96,9 +96,8 @@ export const WorkCard: React.FC<WorkCardProps> = ({ project }) => {
             </video>
           </div>
         </div>
-
-        <div className="grid grid-cols-[1.4fr_4.7fr] gap-6">
-          <div>
+        <div className="grid grid-cols-1 md:grid-cols-[1.4fr_4.7fr] gap-6">
+          <div className="hidden md:block">
             <span className="text-bodyMedium font-medium">{year}</span>
           </div>
           <div className="flex flex-col gap-3 max-w-[24rem]">

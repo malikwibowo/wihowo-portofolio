@@ -16,11 +16,11 @@ export const ThingsCard: React.FC<ThingsCardComponentProps> = ({ data }) => {
   const { title, description, imgSrc, category } = data;
 
   return (
-    <div className="grid grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
       <div className="aspect-square w-full relative rounded-xl overflow-hidden">
         <Image src={imgSrc} alt={title} fill className="object-cover" />
       </div>
-      <div className="flex flex-col py-8 gap-6">
+      <div className="flex flex-col py-1 md:py-8 gap-2 md:gap-6">
         <span className="text-bodyMedium text-gray-600">{category}</span>
         <div className="flex flex-col gap-1">
           <span className="text-bodyMedium font-medium">{title}</span>

@@ -1,5 +1,10 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { Copy } from "lucide-react";
+import { toast } from "sonner";
 
 export interface SocialWrapperProps {
   title: string;
@@ -15,6 +20,14 @@ type Socials = {
 
 export const SocialWrapper = (props: SocialWrapperProps) => {
   const { title, socials } = props;
+
+  const handleCopyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      toast.success("Copied to clipboard!", {
+        duration: 3000, // Show toast for 3 seconds
+      });
+    });
+  };
 
   return (
     <div className="flex flex-col gap-2">
@@ -38,7 +51,26 @@ export const SocialWrapper = (props: SocialWrapperProps) => {
                 {social.name}
               </span>
             </div>
-            <span className="text-bodyMedium">{social.link}</span>
+            {social.name === "Email" ? (
+              <div
+                onClick={() => handleCopyToClipboard(social.link)}
+                className="group flex flex-row items-center gap-2 text-bodyMedium cursor-pointer hover:underline underline-offset-2 relative"
+              >
+                <span className="transition-transform duration-300 group-hover:-translate-x-5">
+                  {social.link}
+                </span>
+                <span className="absolute right-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 text-gray-900">
+                  <Copy className="w-3 h-3" />
+                </span>
+              </div>
+            ) : (
+              <Link
+                href={social.href}
+                className="text-bodyMedium hover:underline underline-offset-2"
+              >
+                {social.link}
+              </Link>
+            )}
           </div>
         ))}
       </div>

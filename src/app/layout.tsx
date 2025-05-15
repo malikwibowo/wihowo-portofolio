@@ -1,37 +1,51 @@
-import type { Metadata } from "next";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import { Inter_Tight } from "next/font/google";
+import dynamic from "next/dynamic";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { Toaster } from "@/components/ui/sonner";
 import { SectionDivider } from "@/components/global/sectionDivider";
-import SmoothScroller from "@/providers/lenisProviders";
+
+const SmoothScroller = dynamic(() => import("@/providers/lenisProviders"), {
+  ssr: false,
+});
 
 const interTight = Inter_Tight({
   variable: "--font-inter-tight",
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Malik Wibowo - UI/UX Designer",
-  description: "Portfolio of Malik Wibowo, UI/UX Designer",
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <html lang="en">
+    <html lang="en" dir="ltr">
       <body
         suppressHydrationWarning
-        className={`${interTight.variable} antialiased`}
+        className={`${interTight.variable} antialiased ${
+          isLoading
+            ? "opacity-0"
+            : "opacity-100 transition-opacity duration-500"
+        }`}
       >
-        <SmoothScroller />
-        <Navbar />
-        {children}
-        <SectionDivider />
-        <Footer />
+        {!isLoading && <SmoothScroller />}
+        {!isLoading && <Navbar />}
+        {!isLoading && children}
+        {!isLoading && <SectionDivider />}
+        {!isLoading && <Footer />}
+        <Toaster />
       </body>
     </html>
   );

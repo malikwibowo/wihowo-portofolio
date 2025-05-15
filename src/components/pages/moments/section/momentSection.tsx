@@ -38,7 +38,7 @@ export const MomentSection = () => {
       <div className="max-w-lg mx-auto px-4 md:px-0">
         <FadeInSection
           delay={1}
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6"
         >
           {momentsData.map((data, index) => (
             <div
@@ -81,17 +81,18 @@ export const MomentSection = () => {
             }
           }}
           onPointerDownOutside={handleClose}
-          className="flex items-center justify-center p-0 border-none shadow-none max-w-fit max-h-fit bg-transparent z-[101] focus-visible:outline-0"
+          className="flex items-center justify-center p-0 border-none shadow-none w-full h-full max-w-fit max-h-fit bg-transparent z-[101] focus-visible:outline-0"
+          style={{
+            aspectRatio: `${aspectRatio}`,
+          }}
         >
           {selectedImage && (
             <div
-              className="relative transition-transform duration-300 overflow-hidden w-full h-full"
+              className="relative transition-transform duration-300 overflow-hidden w-full h-full max-w-[80vw] max-h-[80vh] lg:max-w-[60vw] lg:max-h-[60vh]"
               style={{
-                aspectRatio: `${aspectRatio}`, // Maintain the aspect ratio
+                aspectRatio: `${aspectRatio}`,
                 transform: `scale(${scale})`,
                 cursor: scale === 1 ? "zoom-in" : "zoom-out",
-                maxWidth: "60vw", // Limit the width to the container
-                maxHeight: "60vh", // Limit the height to the container
               }}
               onClick={toggleZoom}
             >

@@ -1,27 +1,45 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { project } from "@/data/works";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Image from "next/image";
 import FadeInSection from "@/components/animations/fadeInSection";
 import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog";
-import { ArrowRight, ArrowLeft } from "lucide-react";
-
-export interface ProjectData {
-  imgSrc: string;
-  year: string;
-  name: string;
-  desc: string;
-  categories: string[];
-  url?: string;
-}
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 
 export const ListWorks = () => {
-  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(
-    null
-  );
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
   const [isOpen, setIsOpen] = useState(false);
+  const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
+
+  useEffect(() => {
+    if (isOpen && carouselApi) {
+      carouselApi.scrollTo(selectedImageIndex);
+    }
+  }, [isOpen, carouselApi, selectedImageIndex]);
+
+  useEffect(() => {
+    if (!carouselApi) return;
+
+    const updateSelectedIndex = () => {
+      setSelectedImageIndex(carouselApi.selectedScrollSnap());
+    };
+
+    setSelectedImageIndex(carouselApi.selectedScrollSnap());
+    carouselApi.on("select", updateSelectedIndex);
+
+    return () => {
+      carouselApi.off("select", updateSelectedIndex);
+    };
+  }, [carouselApi]);
 
   const handleOpen = (index: number) => {
     setSelectedImageIndex(index);
@@ -30,23 +48,7 @@ export const ListWorks = () => {
 
   const handleClose = () => {
     setIsOpen(false);
-    setSelectedImageIndex(null);
-  };
-
-  const handleNext = () => {
-    if (selectedImageIndex !== null) {
-      setSelectedImageIndex((prevIndex) =>
-        prevIndex === project.length - 1 ? 0 : prevIndex! + 1
-      );
-    }
-  };
-
-  const handlePrev = () => {
-    if (selectedImageIndex !== null) {
-      setSelectedImageIndex((prevIndex) =>
-        prevIndex === 0 ? project.length - 1 : prevIndex! - 1
-      );
-    }
+    setSelectedImageIndex(0);
   };
 
   return (
@@ -66,7 +68,7 @@ export const ListWorks = () => {
               <Image
                 src={proj.imgSrc}
                 alt={proj.name}
-                className="object-cover"
+                className="object-cover scale-[1.025] hover:scale-100 transition-transform duration-700 ease-in-out"
                 fill
               />
             </AspectRatio>
@@ -81,11 +83,9 @@ export const ListWorks = () => {
           if (!open) handleClose();
         }}
       >
-        <DialogOverlay className="w-screen h-screen bg-white z-100 fixed">
+        <DialogOverlay className="w-screen h-screen  bg-white z-100 fixed">
           <div className="absolute top-8 left-1/2 -translate-x-1/2 text-bodyMedium font-medium">
-            {selectedImageIndex !== null
-              ? project[selectedImageIndex].name
-              : ""}
+            {project[selectedImageIndex]?.name || ""}
           </div>
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-bodyMedium font-medium">
             Click anywhere to close
@@ -95,30 +95,28 @@ export const ListWorks = () => {
           onPointerDownOutside={handleClose}
           className="flex items-center justify-center p-0 border-none shadow-none max-w-fit max-h-fit bg-transparent z-[101] focus-visible:outline-0"
         >
-          {selectedImageIndex !== null && (
-            <div className="relative flex items-center justify-center">
-              <button
-                onClick={handlePrev}
-                className="absolute -left-20 flex items-center justify-center z-10 w-12 h-12 rounded-full bg-gray-50 hover:bg-gray-200 transition-colors cursor-pointer"
-              >
-                <ArrowLeft className="w-5 h-5" />
-              </button>
-              <div className="relative transition-transform duration-300 overflow-hidden w-[50rem] h-[37rem]">
-                <Image
-                  src={project[selectedImageIndex].imgSrc}
-                  alt={project[selectedImageIndex].name}
-                  fill
-                  className="objet-cover"
-                />
-              </div>
-              <button
-                onClick={handleNext}
-                className="absolute -right-20 flex items-center justify-center z-10 w-12 h-12 rounded-full bg-gray-50 hover:bg-gray-200 transition-colors cursor-pointer"
-              >
-                <ArrowRight className="w-5 h-5" />
-              </button>
-            </div>
-          )}
+          <Carousel
+            setApi={setCarouselApi}
+            className="relative flex items-center justify-center aspect-[50/37] max-w-full w-[50rem] px-4 md:px-0"
+          >
+            <CarouselContent className="w-full">
+              {project.map((proj, index) => (
+                <CarouselItem
+                  className="relative aspect-[50/37] w-full"
+                  key={index}
+                >
+                  <Image
+                    src={proj.imgSrc}
+                    alt={proj.name}
+                    fill
+                    className="object-cover"
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselNext />
+            <CarouselPrevious />
+          </Carousel>
         </DialogContent>
       </Dialog>
     </section>

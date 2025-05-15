@@ -14,7 +14,7 @@ export const DesignerSection = () => {
           <SectionDivider delay={1} />
         </div>
         <FadeInSection delay={2.25}>
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-4 md:gap-6">
             <h2 className="text-bodyMedium font-medium">Designer</h2>
             <p className="text-bodyMedium">
               Currently working at{" "}
@@ -26,7 +26,7 @@ export const DesignerSection = () => {
               — with specializes in User Interface Design.
             </p>
           </div>
-          <div className="flex flex-col gap-16 lg:gap-60 mt-14 relative">
+          <div className="flex flex-col gap-8 md:gap-16 lg:gap-60 mt-14 relative">
             {staticProject.slice(0, 2).map((proj, index) => (
               <WorkCard key={index} project={proj} />
             ))}
