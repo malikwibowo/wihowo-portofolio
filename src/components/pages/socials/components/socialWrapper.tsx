@@ -5,18 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { Copy } from "lucide-react";
 import { toast } from "sonner";
+import { SocialArrayType } from "@/types/sanity.types";
 
 export interface SocialWrapperProps {
   title: string;
-  socials: Socials[];
+  socials: SocialArrayType[];
 }
-
-type Socials = {
-  imgSrc: string;
-  link: string;
-  href: string;
-  name: string;
-};
 
 export const SocialWrapper = (props: SocialWrapperProps) => {
   const { title, socials } = props;
@@ -24,7 +18,7 @@ export const SocialWrapper = (props: SocialWrapperProps) => {
   const handleCopyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text).then(() => {
       toast.success("Copied to clipboard!", {
-        duration: 3000, // Show toast for 3 seconds
+        duration: 3000,
       });
     });
   };
@@ -41,8 +35,8 @@ export const SocialWrapper = (props: SocialWrapperProps) => {
             <div className="flex flex-row items-center gap-2">
               <div className="relative w-4 h-4">
                 <Image
-                  src={social.imgSrc}
-                  alt={social.name}
+                  src={social.imgSrc ? social.imgSrc : ""}
+                  alt={social.name ? social.name : "Social Icon"}
                   fill
                   className="object-cover"
                 />
@@ -53,7 +47,9 @@ export const SocialWrapper = (props: SocialWrapperProps) => {
             </div>
             {social.name === "Email" ? (
               <div
-                onClick={() => handleCopyToClipboard(social.link)}
+                onClick={() =>
+                  handleCopyToClipboard(social.link ? social.link : "")
+                }
                 className="group flex flex-row items-center gap-2 text-bodyMedium cursor-pointer hover:underline underline-offset-2 relative"
               >
                 <span className="transition-transform duration-300 group-hover:-translate-x-5">
@@ -65,7 +61,7 @@ export const SocialWrapper = (props: SocialWrapperProps) => {
               </div>
             ) : (
               <Link
-                href={social.href}
+                href={social.href ? social.href : ""}
                 className="text-bodyMedium hover:underline underline-offset-2"
               >
                 {social.link}

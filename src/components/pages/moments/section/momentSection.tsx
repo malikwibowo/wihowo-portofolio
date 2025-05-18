@@ -3,23 +3,23 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog";
-import { momentsData } from "@/data/moments";
 import FadeInSection from "@/components/animations/fadeInSection";
+import { MomentProps } from "@/types/sanity.types";
 
-export const MomentSection = () => {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+export const MomentSection = ({ data }: { data: MomentProps[] }) => {
+  const [selectedImage, setSelectedImage] = useState<MomentProps>();
   const [isOpen, setIsOpen] = useState(false);
   const [aspectRatio, setAspectRatio] = useState(1); // Store the aspect ratio
   const [scale, setScale] = useState(1);
 
-  const handleOpen = (imgSrc: string) => {
-    setSelectedImage(imgSrc);
+  const handleOpen = (data: MomentProps) => {
+    setSelectedImage(data);
     setIsOpen(true);
   };
 
   const handleClose = () => {
     setIsOpen(false);
-    setSelectedImage(null);
+    setSelectedImage(undefined);
     setAspectRatio(1);
     setScale(1);
   };
@@ -40,15 +40,15 @@ export const MomentSection = () => {
           delay={1}
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6"
         >
-          {momentsData.map((data, index) => (
+          {data.map((data, index) => (
             <div
               key={index}
-              onClick={() => handleOpen(data.imgSrc)}
+              onClick={() => handleOpen(data)}
               className="cursor-pointer flex items-center justify-center w-full aspect-square p-8 bg-[#fafafa] overflow-hidden"
             >
               <div className="relative w-full h-full">
                 <Image
-                  src={data.imgSrc}
+                  src={data.imgSrc ? data.imgSrc : ""}
                   alt=""
                   className="object-contain"
                   fill
@@ -68,7 +68,7 @@ export const MomentSection = () => {
       >
         <DialogOverlay className="w-screen h-screen bg-white z-100 fixed">
           <div className="absolute top-8 left-1/2 -translate-x-1/2 text-bodyMedium font-medium">
-            {selectedImage && selectedImage.split("/").pop()}{" "}
+            {selectedImage?.title}
           </div>
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-bodyMedium font-medium">
             Click anywhere to close
@@ -86,7 +86,7 @@ export const MomentSection = () => {
             aspectRatio: `${aspectRatio}`,
           }}
         >
-          {selectedImage && (
+          {selectedImage?.imgSrc && (
             <div
               className="relative transition-transform duration-300 overflow-hidden w-full h-full max-w-[80vw] max-h-[80vh] lg:max-w-[60vw] lg:max-h-[60vh]"
               style={{
@@ -97,7 +97,7 @@ export const MomentSection = () => {
               onClick={toggleZoom}
             >
               <Image
-                src={selectedImage}
+                src={selectedImage.imgSrc}
                 alt="Zoomed"
                 fill
                 className="object-contain"

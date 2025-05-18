@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { project } from "@/data/works";
+// import { project } from "@/data/works";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Image from "next/image";
 import FadeInSection from "@/components/animations/fadeInSection";
@@ -14,6 +14,7 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
+import { WorksProps } from "@/types/sanity.types";
 
 export interface ProjectData {
   imgSrc: string;
@@ -24,7 +25,7 @@ export interface ProjectData {
   url?: string;
 }
 
-export const ListWorks = () => {
+export const ListWorks = ({ project }: { project: WorksProps[] }) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
   const [isOpen, setIsOpen] = useState(false);
   const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
@@ -75,8 +76,8 @@ export const ListWorks = () => {
               onClick={() => handleOpen(index)}
             >
               <Image
-                src={proj.imgSrc}
-                alt={proj.name}
+                src={proj.imgSrc ? proj.imgSrc : ""}
+                alt={proj.name ? proj.name : "Project Image"}
                 className="object-cover scale-[1.025] hover:scale-100 transition-transform duration-700 ease-in-out"
                 fill
               />
@@ -115,8 +116,8 @@ export const ListWorks = () => {
                   key={index}
                 >
                   <Image
-                    src={proj.imgSrc}
-                    alt={proj.name}
+                    src={proj.imgSrc ? proj.imgSrc : ""}
+                    alt={proj.name ? proj.name : ""}
                     fill
                     className="object-cover"
                   />

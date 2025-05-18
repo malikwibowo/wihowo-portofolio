@@ -1,34 +1,29 @@
 import { RoundedDivider } from "@/components/global/roundedDivider";
-import { WritingProps } from "@/types/sanity.types";
-import Image from "next/image";
+import { PoetryProps } from "@/types/sanity.types";
 import Link from "next/link";
 import React from "react";
 
-export const WritingsItem = ({ data }: { data: WritingProps }) => {
+import slugify from "react-slugify";
+
+export const PoetryItem = ({ data }: { data: PoetryProps }) => {
   return (
     <Link
-      href={data.url ? data.url : ""}
+      href={`/poetry/${slugify(data.title)}`}
       className="flex flex-row justify-between gap-6 pb-6 border-b border-dashed border-gray-200 last-of-type:border-b-0 group"
     >
       <div className="flex flex-col gap-8">
         <span className="text-bodyMedium font-medium">{data.title}</span>
         <div className="flex gap-2 items-center">
           <span className="text-bodyMedium text-gray-600">{data.date}</span>
-
-          <RoundedDivider />
-          <span className="text-bodyMedium text-gray-600">
-            {data.readMinutes}
-          </span>
+          {data.category && (
+            <>
+              <RoundedDivider />
+              <span className="text-bodyMedium text-gray-600">
+                {data.category}
+              </span>
+            </>
+          )}
         </div>
-      </div>
-
-      <div className="w-20 h-20 relative border rounded-xl overflow-hidden">
-        <Image
-          src={data.imgSrc ? data.imgSrc : ""}
-          alt=""
-          className="object-fit"
-          fill
-        />
       </div>
     </Link>
   );
