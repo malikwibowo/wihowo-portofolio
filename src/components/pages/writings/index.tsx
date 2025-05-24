@@ -19,6 +19,7 @@ const POSTS_QUERY_POETRY = `*[_type == "poetry"] | order(_createdAt asc){
   date,
   category,
   content,
+  "slug": slug.current
 }`;
 
 const options = { next: { revalidate: 30 } };

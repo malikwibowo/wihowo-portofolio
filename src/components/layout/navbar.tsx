@@ -20,7 +20,6 @@ import { usePathname } from "next/navigation";
 import { Button } from "../ui/button";
 
 import Image from "next/image";
-import MalikAva from "@/assets/images/malikava.png";
 import { Footer } from "./footer";
 import Link from "next/link";
 import HoverImageBurst from "../global/hoverImageBurst";
@@ -51,11 +50,14 @@ export const Navbar = () => {
                 <BreadcrumbItem>
                   <HoverImageBurst images={imagesBurst}>
                     <Link className="flex items-center gap-2" href="/">
-                      <Image
-                        className="w-8 h-8"
-                        src={MalikAva}
-                        alt="Malik Avatar"
-                      />
+                      <div className="w-8 h-8 rounded-full relative overflow-hidden">
+                        <Image
+                          fill
+                          className="object-cover"
+                          src="/assets/images/malikava.webp"
+                          alt="Malik Avatar"
+                        />
+                      </div>
                       <p
                         className={`${
                           pathname === "/" ? "inline" : "hidden"
@@ -66,7 +68,6 @@ export const Navbar = () => {
                     </Link>
                   </HoverImageBurst>
                 </BreadcrumbItem>
-
                 {pathSegments.length > 0 && (
                   <React.Fragment>
                     <BreadcrumbSeparator>

@@ -88,6 +88,7 @@ export type PoetryProps = {
   date?: string;
   category?: string;
   content?: BlockContentSanityProps;
+  slug?: string;
 };
 
 export type WritingProps = {

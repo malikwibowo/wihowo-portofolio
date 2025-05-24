@@ -3,12 +3,12 @@ import { PoetryProps } from "@/types/sanity.types";
 import Link from "next/link";
 import React from "react";
 
-import slugify from "react-slugify";
-
 export const PoetryItem = ({ data }: { data: PoetryProps }) => {
+  console.log(data);
+
   return (
     <Link
-      href={`/poetry/${slugify(data.title)}`}
+      href={`/writings/${data.slug}`}
       className="flex flex-row justify-between gap-6 pb-6 border-b border-dashed border-gray-200 last-of-type:border-b-0 group"
     >
       <div className="flex flex-col gap-8">

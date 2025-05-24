@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
+import emailjs from "@emailjs/browser";
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "This field has to be filled." }),
@@ -38,8 +40,40 @@ export const ContactForm = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+    console.log(serviceId, templateId, publicKey);
+
+    if (!serviceId || !templateId || !publicKey) {
+      console.error("EmailJS env does not setup properly");
+      return;
+    }
+
+    try {
+      const response = await emailjs.send(
+        serviceId,
+        templateId,
+        values,
+        publicKey
+      );
+
+      if (response.status === 200) {
+        toast.success("Your message has been sent successfully!", {
+          duration: 3000,
+        });
+        form.reset();
+      } else {
+        throw new Error("Failed to send message.");
+      }
+    } catch (error) {
+      toast.error("Something went wrong. Please try again later.", {
+        duration: 3000,
+      });
+      console.error(error);
+    }
   }
 
   return (
