@@ -2,8 +2,12 @@ import { PoemsPage } from "@/components/pages/poem";
 import { client } from "@/sanity/client";
 import { PoetryProps } from "@/types/sanity.types";
 
-export default async function Poems({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default async function Poems({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
 
   const POSTS_QUERY_POETRY = `*[_type == "poetry" && slug.current == "${slug}"][0]`;
   const data = await client.fetch<PoetryProps>(POSTS_QUERY_POETRY);
@@ -11,7 +15,9 @@ export default async function Poems({ params }: { params: { slug: string } }) {
   if (!data) {
     return <div>Poem not found</div>;
   }
+
   const { _createdAt } = data;
+
   const PREV_QUERY = `*[_type == "poetry" && _createdAt < "${_createdAt}"] | order(_createdAt desc)[0] {
     "slug": slug.current
   }`;
