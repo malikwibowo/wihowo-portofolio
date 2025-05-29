@@ -60,7 +60,7 @@ export default function HoverImageBurst({
 
       {hovering && (
         <div
-          className="fixed w-[14.5rem] h-[18.125rem] pointer-events-none z-100 transition-transform rounded-xl -rotate-4 overflow-hidden"
+          className="hidden md:block fixed w-[14.5rem] h-[18.125rem] pointer-events-none z-100 transition-transform rounded-xl -rotate-4 overflow-hidden"
           style={{
             left: mousePos.x + 20,
             top: mousePos.y + 20,

@@ -15,6 +15,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { WorksProps } from "@/types/sanity.types";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 export interface ProjectData {
   imgSrc: string;
@@ -67,6 +68,7 @@ export const ListWorks = ({ project }: { project: WorksProps[] }) => {
         <FadeInSection
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
           delay={1}
+          stagger={0.15}
         >
           {project.map((proj, index) => (
             <AspectRatio
@@ -105,6 +107,7 @@ export const ListWorks = ({ project }: { project: WorksProps[] }) => {
           onPointerDownOutside={handleClose}
           className="flex items-center justify-center p-0 border-none shadow-none max-w-fit max-h-fit bg-transparent z-[101] focus-visible:outline-0"
         >
+          <DialogTitle className="sr-only"></DialogTitle>
           <Carousel
             setApi={setCarouselApi}
             className="relative flex items-center justify-center aspect-[50/37] max-w-full w-[50rem] px-4 md:px-0"
@@ -112,7 +115,7 @@ export const ListWorks = ({ project }: { project: WorksProps[] }) => {
             <CarouselContent className="w-full">
               {project.map((proj, index) => (
                 <CarouselItem
-                  className="relative aspect-[50/37] w-full"
+                  className="relative aspect-[50/37] w-full max-h-[75vh]"
                   key={index}
                 >
                   <Image
@@ -120,6 +123,7 @@ export const ListWorks = ({ project }: { project: WorksProps[] }) => {
                     alt={proj.name ? proj.name : ""}
                     fill
                     className="object-cover"
+                    quality={100}
                   />
                 </CarouselItem>
               ))}

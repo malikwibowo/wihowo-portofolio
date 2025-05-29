@@ -1,10 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Copy } from "lucide-react";
-import { toast } from "sonner";
 import { SocialArrayType } from "@/types/sanity.types";
 
 export interface SocialWrapperProps {
@@ -14,12 +13,12 @@ export interface SocialWrapperProps {
 
 export const SocialWrapper = (props: SocialWrapperProps) => {
   const { title, socials } = props;
+  const [tooltipVisible, setTooltipVisible] = useState(false);
 
   const handleCopyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text).then(() => {
-      toast.success("Copied to clipboard!", {
-        duration: 3000,
-      });
+      setTooltipVisible(true);
+      setTimeout(() => setTooltipVisible(false), 2000);
     });
   };
 
@@ -57,6 +56,11 @@ export const SocialWrapper = (props: SocialWrapperProps) => {
                 </span>
                 <span className="absolute right-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 text-gray-900">
                   <Copy className="w-3 h-3" />
+                  {tooltipVisible && (
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-gray-900 text-white text-sm rounded-md shadow-lg">
+                      Copied!
+                    </div>
+                  )}
                 </span>
               </div>
             ) : (

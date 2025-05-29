@@ -1,15 +1,41 @@
+"use client";
+
 import { ArchiveProps } from "@/types/sanity.types";
+import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-
-export interface ArchiveItemProps {
-  title: string;
-  url: string;
-  imgSrc: string;
-}
+import React, { useRef, useEffect } from "react";
+import { gsap } from "gsap";
 
 export const ArchiveItem = ({ data }: { data: ArchiveProps }) => {
+  const arrowRef = useRef<SVGSVGElement>(null);
+
+  useEffect(() => {
+    const arrow = arrowRef.current;
+
+    if (!arrow) return;
+    const tl = gsap.timeline({ paused: true });
+
+    tl.fromTo(
+      arrow,
+      { y: 10, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.2, ease: "power1.out" }
+    );
+
+    const link = arrow.closest("a");
+    if (link) {
+      link.addEventListener("mouseenter", () => tl.play());
+      link.addEventListener("mouseleave", () => tl.reverse());
+    }
+
+    return () => {
+      if (link) {
+        link.removeEventListener("mouseenter", () => tl.play());
+        link.removeEventListener("mouseleave", () => tl.reverse());
+      }
+    };
+  }, []);
+
   return (
     <Link
       href={`http://${data.url}/`}
@@ -27,9 +53,10 @@ export const ArchiveItem = ({ data }: { data: ArchiveProps }) => {
       <div className="flex flex-col gap-8">
         <span className="text-bodyMedium font-medium">{data.title}</span>
         <div className="flex gap-2 items-center">
-          <span className="text-bodyMedium text-gray-600 font-medium">
+          <span className="text-bodyMedium text-gray-600 font-medium underline">
             {data.url}
           </span>
+          <ArrowUpRight ref={arrowRef} size={16} />
         </div>
       </div>
     </Link>

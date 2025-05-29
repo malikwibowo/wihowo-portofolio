@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Equal, Slash, X } from "lucide-react";
+import { Equal, X } from "lucide-react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -59,7 +59,7 @@ export const Navbar = () => {
                         />
                       </div>
                       <p
-                        className={`${
+                        className={`font-medium text-bodyMedium text-neutral-900 ${
                           pathname === "/" ? "inline" : "hidden"
                         } md:inline`}
                       >
@@ -71,7 +71,20 @@ export const Navbar = () => {
                 {pathSegments.length > 0 && (
                   <React.Fragment>
                     <BreadcrumbSeparator>
-                      <Slash />
+                      <svg
+                        className="w-4 h-4"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M5.5 13.4987L10.5 2.49866"
+                          stroke="#A5AAB3"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
                     </BreadcrumbSeparator>
                     <BreadcrumbItem>
                       <Link href={`/${pathSegments[0]}`}>
@@ -93,7 +106,20 @@ export const Navbar = () => {
                 {pathSegments.slice(1).map((segment, index) => (
                   <React.Fragment key={index}>
                     <BreadcrumbSeparator>
-                      <Slash />
+                      <svg
+                        className="w-4 h-4"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M5.5 13.4987L10.5 2.49866"
+                          stroke="#A5AAB3"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
                     </BreadcrumbSeparator>
                     <BreadcrumbItem>
                       <Link
@@ -135,7 +161,10 @@ export const Navbar = () => {
                   <DrawerHeader className="sr-only">
                     <DrawerTitle>Are you absolutely sure?</DrawerTitle>
                   </DrawerHeader>
-                  <Footer onLinkClick={() => setIsDrawerOpen(false)} />
+                  <Footer
+                    onLinkClick={() => setIsDrawerOpen(false)}
+                    variant="navbar"
+                  />
                 </DrawerContent>
               </Drawer>
               <Button variant="default" size="sm" asChild>

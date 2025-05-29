@@ -1,5 +1,5 @@
 import React from "react";
-import { HeroSection } from "@/components/global/heroSection";
+import FadeInSection from "@/components/animations/fadeInSection";
 import { ArchiveSection } from "./section/archiveSection";
 import { client } from "@/sanity/client";
 import { ArchiveProps } from "@/types/sanity.types";
@@ -17,7 +17,20 @@ export const ArchivePage = async () => {
 
   return (
     <>
-      <HeroSection title="Archive" subtitle="Old days, but still alive." />
+      <section className="w-full pt-[7.25rem] pb-16 md:pt-[11.75rem] md:pb-8">
+        <div className="max-w-md mx-auto px-4 md:px-0">
+          <div className="flex flex-col gap-1">
+            <FadeInSection delay={0.4}>
+              <span className="text-bodyMedium text-gray-600">
+                Old days, but still alive.
+              </span>
+            </FadeInSection>
+            <FadeInSection delay={0.6}>
+              <h1 className="text-h1 font-medium">Archive</h1>
+            </FadeInSection>
+          </div>
+        </div>
+      </section>
       <ArchiveSection data={data} />
     </>
   );

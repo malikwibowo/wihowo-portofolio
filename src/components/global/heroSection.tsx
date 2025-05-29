@@ -15,8 +15,6 @@ export const HeroSection = (props: HeroData) => {
         <div className="flex flex-col gap-1">
           <FadeInSection delay={0.4}>
             <span className="text-bodyMedium text-gray-600">{subtitle}</span>
-          </FadeInSection>
-          <FadeInSection delay={0.6}>
             <h1 className="text-h1 font-medium">{title}</h1>
           </FadeInSection>
         </div>
