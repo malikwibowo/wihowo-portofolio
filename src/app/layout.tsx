@@ -3,8 +3,34 @@ import ClientLayout from "@/components/layout/clientLayout";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Malik Wibowo - UIUX Designer",
-  description: "Malik Wibowo's personal website portfolio",
+  title: "Malik Wibowo – UI/UX Designer & Product Design Specialist",
+  description:
+    "Malik Wibowo, an UI/UX designer from Malang, Indonesia (3+ years experience), currently at Dipa Inhouse. Expert in Figma, Framer, and Jitter with a portfolio of web dashboards, landing pages, and app designs.",
+  openGraph: {
+    title: "Malik Wibowo – UI/UX Designer & Product Design Specialist",
+    description:
+      "Explore Malik Wibowo’s portfolio: UI/UX design, interaction prototypes, Framer-built websites, and Dribbble showcases.",
+    url: "https://malikwibowo.com/",
+    siteName: "Malik Wibowo Portfolio",
+    images: [
+      {
+        url: "/malik.png",
+        width: 512,
+        height: 512,
+        alt: "Malik Wibowo – UI/UX Designer",
+        type: "image/png",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Malik Wibowo – UI/UX Designer",
+    description: "UI/UX · Product Design · Figma · Framer · Dribbble Portfolio",
+    images: ["/malik.png"],
+    creator: "@malikkwibowo", // if applicable
+  },
   icons: {
     icon: [
       {
@@ -13,6 +39,21 @@ export const metadata: Metadata = {
       },
     ],
   },
+  keywords: [
+    "Malik Wibowo",
+    "UI UX designer",
+    "UI designer",
+    "UX designer",
+    "Product design",
+    "Figma",
+    "Framer",
+    "Malang Indonesia",
+    "Dipa Inhouse",
+    "Dribbble portfolio",
+    "Interactive design",
+    "Web dashboards",
+    "Landing page design",
+  ],
 };
 
 export default function RootLayout({
