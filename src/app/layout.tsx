@@ -1,5 +1,5 @@
 import ClientLayout from "@/components/layout/clientLayout";
-
+import Head from "next/head";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -63,6 +63,50 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" dir="ltr">
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Malik Wibowo",
+              alternateName: "Malik KW",
+              url: "https://malikwibowo.com/",
+              image: "https://malikwibowo.com/malik.png",
+              jobTitle: "UI/UX Designer",
+              worksFor: {
+                "@type": "Organization",
+                name: "Dipa Inhouse",
+              },
+              sameAs: [
+                "https://www.linkedin.com/in/malikwibowo",
+                "https://dribbble.com/malikwibowo",
+                "https://github.com/malikwibowo",
+                "https://twitter.com/malikkwibowo",
+              ],
+              description:
+                "Malik Wibowo is a UI/UX designer based in Malang, Indonesia, with 3+ years of experience designing interactive websites, dashboards, and applications using Figma, Framer, and Jitter.",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Malang",
+                addressCountry: "Indonesia",
+              },
+              knowsAbout: [
+                "UI Design",
+                "UX Design",
+                "Product Design",
+                "Figma",
+                "Framer",
+                "Jitter",
+                "Responsive Design",
+                "Design Systems",
+                "Prototyping",
+              ],
+            }),
+          }}
+        />
+      </Head>
       <body suppressHydrationWarning>
         <ClientLayout>{children}</ClientLayout>
       </body>
