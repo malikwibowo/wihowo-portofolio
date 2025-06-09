@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-// import { project } from "@/data/works";
+import React, { useState, useEffect, useRef } from "react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Image from "next/image";
 import FadeInSection from "@/components/animations/fadeInSection";
@@ -17,19 +16,11 @@ import {
 import { WorksProps } from "@/types/sanity.types";
 import { DialogTitle } from "@radix-ui/react-dialog";
 
-export interface ProjectData {
-  imgSrc: string;
-  year: string;
-  name: string;
-  desc: string;
-  categories: string[];
-  url?: string;
-}
-
 export const ListWorks = ({ project }: { project: WorksProps[] }) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
   const [isOpen, setIsOpen] = useState(false);
   const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
+  const carouselRef = useRef<HTMLDivElement>(null); // Ref for the Carousel component
 
   useEffect(() => {
     if (isOpen && carouselApi) {
@@ -61,6 +52,25 @@ export const ListWorks = ({ project }: { project: WorksProps[] }) => {
     setIsOpen(false);
     setSelectedImageIndex(0);
   };
+
+  useEffect(() => {
+    const handlePointerDownOutside = (event: PointerEvent) => {
+      if (
+        carouselRef.current &&
+        !carouselRef.current.contains(event.target as Node)
+      ) {
+        handleClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("pointerdown", handlePointerDownOutside);
+    }
+
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDownOutside);
+    };
+  }, [isOpen]);
 
   return (
     <section className="w-full pt-8 pb-[7.25rem]">
@@ -95,7 +105,7 @@ export const ListWorks = ({ project }: { project: WorksProps[] }) => {
           if (!open) handleClose();
         }}
       >
-        <DialogOverlay className="w-screen h-screen  bg-white z-100 fixed">
+        <DialogOverlay className="w-screen h-screen bg-white z-100 fixed">
           <div className="absolute top-8 left-1/2 -translate-x-1/2 text-bodyMedium font-medium">
             {project[selectedImageIndex]?.name || ""}
           </div>
@@ -103,12 +113,10 @@ export const ListWorks = ({ project }: { project: WorksProps[] }) => {
             Click anywhere to close
           </div>
         </DialogOverlay>
-        <DialogContent
-          onPointerDownOutside={handleClose}
-          className="flex items-center justify-center p-0 border-none shadow-none max-w-fit max-h-fit bg-transparent z-[101] focus-visible:outline-0"
-        >
+        <DialogContent className="flex items-center justify-center p-0 border-none shadow-none max-w-fit max-h-fit bg-transparent z-[101] focus-visible:outline-0">
           <DialogTitle className="sr-only"></DialogTitle>
           <Carousel
+            ref={carouselRef}
             setApi={setCarouselApi}
             className="relative flex items-center justify-center aspect-[50/37] max-w-full w-[50rem] px-4 md:px-0"
           >

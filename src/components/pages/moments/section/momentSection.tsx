@@ -1,32 +1,39 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog";
 import FadeInSection from "@/components/animations/fadeInSection";
 import { MomentProps } from "@/types/sanity.types";
 
 export const MomentSection = ({ data }: { data: MomentProps[] }) => {
-  const [selectedImage, setSelectedImage] = useState<MomentProps>();
+  const [selectedImage, setSelectedImage] = useState<MomentProps | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [aspectRatio, setAspectRatio] = useState(1); // Store the aspect ratio
+  const [aspectRatio, setAspectRatio] = useState(1);
   const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    if (!selectedImage) {
+      setAspectRatio(1);
+    }
+  }, [selectedImage]);
 
   const handleOpen = (data: MomentProps) => {
     setSelectedImage(data);
     setIsOpen(true);
+    setAspectRatio(1);
   };
 
   const handleClose = () => {
     setIsOpen(false);
-    setSelectedImage(undefined);
+    setSelectedImage(null);
     setAspectRatio(1);
     setScale(1);
   };
 
   const handleImageLoad = (img: HTMLImageElement) => {
     const ratio = img.naturalWidth / img.naturalHeight;
-    setAspectRatio(ratio); // Calculate and store the aspect ratio
+    setAspectRatio(ratio);
   };
 
   const toggleZoom = () => {
@@ -82,17 +89,15 @@ export const MomentSection = ({ data }: { data: MomentProps[] }) => {
           }}
           onPointerDownOutside={handleClose}
           className="flex items-center justify-center p-0 border-none shadow-none w-full h-full max-w-fit max-h-fit bg-transparent z-[101] focus-visible:outline-0"
-          style={{
-            aspectRatio: `${aspectRatio}`,
-          }}
         >
           {selectedImage?.imgSrc && (
             <div
-              className="relative transition-transform duration-300 overflow-hidden w-full h-full max-w-[80vw] max-h-[80vh] lg:max-w-[60vw] lg:max-h-[60vh]"
+              className="relative transition-transform duration-300 overflow-hidden w-full max-w-[80vw]"
               style={{
-                aspectRatio: `${aspectRatio}`,
+                height: "60vh", // Max height of the parent container
+                width: `calc(60vh * ${aspectRatio})`, // Dynamically calculate width based on aspect ratio
+                aspectRatio: `${aspectRatio}`, // Maintain aspect ratio
                 transform: `scale(${scale})`,
-                cursor: scale === 1 ? "zoom-in" : "zoom-out",
               }}
               onClick={toggleZoom}
             >
@@ -100,8 +105,11 @@ export const MomentSection = ({ data }: { data: MomentProps[] }) => {
                 src={selectedImage.imgSrc}
                 alt="Zoomed"
                 fill
-                className="object-contain"
-                onLoadingComplete={handleImageLoad}
+                className={`object-contain ${
+                  scale === 1 ? "cursor-zoom-in" : "cursor-zoom-out"
+                }`}
+                quality={100}
+                onLoadingComplete={(img) => handleImageLoad(img)}
               />
             </div>
           )}

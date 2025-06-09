@@ -1,10 +1,42 @@
+"use client";
+
 import { RoundedDivider } from "@/components/global/roundedDivider";
 import { WritingProps } from "@/types/sanity.types";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useRef, useEffect } from "react";
+import { ArrowUpRight } from "lucide-react";
+import { gsap } from "gsap";
 
 export const WritingsItem = ({ data }: { data: WritingProps }) => {
+  const arrowRef = useRef<SVGSVGElement>(null);
+
+  useEffect(() => {
+    const arrow = arrowRef.current;
+
+    if (!arrow) return;
+    const tl = gsap.timeline({ paused: true });
+
+    tl.fromTo(
+      arrow,
+      { y: 10, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.2, ease: "power1.out" }
+    );
+
+    const link = arrow.closest("a");
+    if (link) {
+      link.addEventListener("mouseenter", () => tl.play());
+      link.addEventListener("mouseleave", () => tl.reverse());
+    }
+
+    return () => {
+      if (link) {
+        link.removeEventListener("mouseenter", () => tl.play());
+        link.removeEventListener("mouseleave", () => tl.reverse());
+      }
+    };
+  }, []);
+
   return (
     <Link
       href={data.url ? data.url : ""}
@@ -14,14 +46,13 @@ export const WritingsItem = ({ data }: { data: WritingProps }) => {
         <span className="text-bodyMedium font-medium">{data.title}</span>
         <div className="flex gap-2 items-center">
           <span className="text-bodyMedium text-gray-600">{data.date}</span>
-
           <RoundedDivider />
           <span className="text-bodyMedium text-gray-600">
             {data.readMinutes}
           </span>
+          <ArrowUpRight ref={arrowRef} size={16} />
         </div>
       </div>
-
       <div className="w-20 h-20 relative border rounded-xl overflow-hidden">
         <Image
           src={data.imgSrc ? data.imgSrc : ""}
