@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Minus } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -10,6 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export interface StaticProjectData {
   vidSrc: string;
+  thumbnail: string;
   year: string;
   name: string;
   desc: string;
@@ -22,58 +24,73 @@ interface WorkCardProps {
 }
 
 export const WorkCard: React.FC<WorkCardProps> = ({ project }) => {
-  const { vidSrc, year, name, desc, categories, url } = project;
+  const { vidSrc, thumbnail, year, name, desc, categories, url } = project;
   const stickyRef = useRef<HTMLDivElement>(null);
   const scaleRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const stickyElement = stickyRef.current;
-    const scaleElement = scaleRef.current;
-    const sectionElement = sectionRef.current;
-    const videoElement = videoRef.current;
-
-    const mm = gsap.matchMedia();
-
-    mm.add("(min-width: 1024px)", () => {
-      if (stickyElement && scaleElement && sectionElement && videoElement) {
-        gsap.fromTo(
-          scaleElement,
-          { scale: 1, borderRadius: "0px" },
-          {
-            scale: 1.2,
-            borderRadius: "16px",
-            scrollTrigger: {
-              trigger: sectionElement,
-              start: "top top",
-              end: "30% top",
-              scrub: true,
-            },
-            ease: "power1.inOut",
-          }
-        );
-
-        ScrollTrigger.create({
-          trigger: sectionElement,
-          start: "top top",
-          end: "80% top",
-          scrub: true,
-          onUpdate: (self) => {
-            const progress = self.progress;
-            const duration = videoElement.duration;
-            if (!isNaN(duration)) {
-              videoElement.currentTime = progress * duration;
-            }
-          },
-        });
-      }
-    });
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      mm.revert();
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    if (!isMobile) {
+      const stickyElement = stickyRef.current;
+      const scaleElement = scaleRef.current;
+      const sectionElement = sectionRef.current;
+      const videoElement = videoRef.current;
+
+      const mm = gsap.matchMedia();
+
+      mm.add("(min-width: 1024px)", () => {
+        if (stickyElement && scaleElement && sectionElement && videoElement) {
+          gsap.fromTo(
+            scaleElement,
+            { scale: 1, borderRadius: "0px" },
+            {
+              scale: 1.2,
+              borderRadius: "16px",
+              scrollTrigger: {
+                trigger: sectionElement,
+                start: "top top",
+                end: "30% top",
+                scrub: true,
+              },
+              ease: "power1.inOut",
+            }
+          );
+
+          ScrollTrigger.create({
+            trigger: sectionElement,
+            start: "top top",
+            end: "80% top",
+            scrub: true,
+            onUpdate: (self) => {
+              const progress = self.progress;
+              const duration = videoElement.duration;
+              if (!isNaN(duration)) {
+                videoElement.currentTime = progress * duration;
+              }
+            },
+          });
+        }
+      });
+
+      return () => {
+        mm.revert();
+      };
+    }
+  }, [isMobile]);
 
   return (
     <Link href={url ? url : "#"}>
@@ -86,14 +103,26 @@ export const WorkCard: React.FC<WorkCardProps> = ({ project }) => {
             ref={scaleRef}
             className="lg:transform lg:-translate-y-1/2 lg:overflow-hidden"
           >
-            <video
-              ref={videoRef}
-              className="w-full h-auto"
-              muted
-              preload="auto"
-            >
-              <source src={vidSrc} type="video/mp4" />
-            </video>
+            {isMobile ? (
+              <div className="relative w-full aspect-[32.7/22]">
+              <Image
+                src={thumbnail}
+                alt={name}
+                fill
+                quality={100}
+                className="object-contain"
+              />
+              </div>
+            ) : (
+              <video
+                ref={videoRef}
+                className="w-full h-auto"
+                muted
+                preload="auto"
+              >
+                <source src={vidSrc} type="video/mp4" />
+              </video>
+            )}
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-[1.4fr_4.7fr] gap-6">
