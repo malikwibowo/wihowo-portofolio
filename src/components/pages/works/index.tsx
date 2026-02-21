@@ -12,7 +12,7 @@ export const Workspage = async () => {
 
   return (
     <>
-      <HeroSection title="Collection of Design Work" subtitle="2020-2025" />
+      <HeroSection title="Collection of Design Work" subtitle="Gallery," />
       <ListWorks project={data} />
     </>
   );
