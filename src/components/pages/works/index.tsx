@@ -7,7 +7,7 @@ import { WorksProps } from "@/types/sanity.types";
 const POSTS_QUERY = `*[_type == "works"]{ _id, "imgSrc": imgSrc.asset->url, name }`;
 const options = { next: { revalidate: 30 } };
 
-export const Workspace = async () => {
+export const Workspage = async () => {
   const data = await client.fetch<WorksProps[]>(POSTS_QUERY, {}, options);
 
   return (
