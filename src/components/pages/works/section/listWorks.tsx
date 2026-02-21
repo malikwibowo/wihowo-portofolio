@@ -74,7 +74,7 @@ export const ListWorks = ({ project }: { project: WorksProps[] }) => {
 
   return (
     <section className="w-full pt-8 pb-[7.25rem]">
-      <div className="max-w-4xl mx-auto px-4 md:px-0">
+      <div className="max-w-3xl mx-auto px-4 md:px-0">
         <FadeInSection
           className="grid grid-cols-1 gap-6"
           delay={1}
