@@ -4,10 +4,10 @@ import { ListWorks } from "@/components/pages/works/section/listWorks";
 import { client } from "@/sanity/client";
 import { WorksProps } from "@/types/sanity.types";
 
-const POSTS_QUERY = `*[_type == "works"]{ _id, "imgSrc": imgSrc.asset->url, year, name, desc, categories, url }`;
+const POSTS_QUERY = `*[_type == "works"]{ _id, "imgSrc": imgSrc.asset->url, name }`;
 const options = { next: { revalidate: 30 } };
 
-export const Workspage = async () => {
+export const Workspace = async () => {
   const data = await client.fetch<WorksProps[]>(POSTS_QUERY, {}, options);
 
   return (
