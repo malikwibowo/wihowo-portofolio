@@ -74,15 +74,15 @@ export const ListWorks = ({ project }: { project: WorksProps[] }) => {
 
   return (
     <section className="w-full pt-8 pb-[7.25rem]">
-      <div className="max-w-lg mx-auto px-4 md:px-0">
+      <div className="max-w-4xl mx-auto px-4 md:px-0">
         <FadeInSection
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+          className="grid grid-cols-1 gap-6"
           delay={1}
           stagger={0.15}
         >
           {project.map((proj, index) => (
             <AspectRatio
-              ratio={38 / 28}
+              ratio={16 / 9}
               key={index}
               className="rounded-[0.625rem] overflow-hidden cursor-pointer"
               onClick={() => handleOpen(index)}
