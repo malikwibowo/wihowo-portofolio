@@ -4,7 +4,7 @@ import { ListWorks } from "@/components/pages/works/section/listWorks";
 import { client } from "@/sanity/client";
 import { WorksProps } from "@/types/sanity.types";
 
-const POSTS_QUERY = `*[_type == "works"]{ _id, "imgSrc": imgSrc.asset->url, name }`;
+const POSTS_QUERY = `*[_type == "works"] | order(_createdAt asc) { _id, "imgSrc": imgSrc.asset->url, name }`;
 const options = { next: { revalidate: 30 } };
 
 export const Workspage = async () => {
