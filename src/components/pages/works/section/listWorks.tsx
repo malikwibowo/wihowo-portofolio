@@ -82,7 +82,7 @@ export const ListWorks = ({ project }: { project: WorksProps[] }) => {
         >
           {project.map((proj, index) => (
             <AspectRatio
-              ratio={16 / 9}
+              ratio={4 / 3}
               key={index}
               className="rounded-[0.625rem] overflow-hidden cursor-pointer"
               onClick={() => handleOpen(index)}
